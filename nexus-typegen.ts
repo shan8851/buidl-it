@@ -28,6 +28,14 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Mutation: {};
+  Project: { // root type
+    description: string; // String!
+    examples?: Array<string | null> | null; // [String]
+    id: number; // Int!
+    stories?: Array<string | null> | null; // [String]
+    title: string; // String!
+  }
   Query: {};
 }
 
@@ -42,18 +50,44 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    add: NexusGenRootTypes['Project']; // Project!
+  }
+  Project: { // field return type
+    description: string; // String!
+    examples: Array<string | null> | null; // [String]
+    id: number; // Int!
+    stories: Array<string | null> | null; // [String]
+    title: string; // String!
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    allProjects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    add: 'Project'
+  }
+  Project: { // field return type name
+    description: 'String'
+    examples: 'String'
+    id: 'Int'
+    stories: 'String'
+    title: 'String'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    allProjects: 'Project'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    add: { // args
+      description: string; // String!
+      title: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {

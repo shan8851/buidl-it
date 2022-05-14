@@ -12,8 +12,9 @@ model Project {
   createdAt   DateTime @default(now())
   title         String
   description String
-  postedBy    User?    @relation(fields: [postedById], references: [id])
+  postedBy    User?    @relation(name: "PostedBy", fields: [postedById], references: [id])
   postedById  Int?
+  voters      User[]   @relation(name: "Votes")
 }
 
 
@@ -22,5 +23,6 @@ model User {
   name      String
   email     String   @unique
   password  String
-  projects  Project[]
+  projects  Project[] @relation(name: "PostedBy")
+  votes     Project[] @relation(name: "Votes")
 }

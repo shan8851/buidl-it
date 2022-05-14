@@ -29,9 +29,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  ProjectOrderByInput: { // input type
+    createdAt?: NexusGenEnums['Sort'] | null; // Sort
+    description?: NexusGenEnums['Sort'] | null; // Sort
+    title?: NexusGenEnums['Sort'] | null; // Sort
+  }
 }
 
 export interface NexusGenEnums {
+  Sort: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -57,6 +63,11 @@ export interface NexusGenObjects {
     stories?: Array<string | null> | null; // [String]
     title: string; // String!
   }
+  ProjectList: { // root type
+    count: number; // Int!
+    id?: string | null; // ID
+    projects: NexusGenRootTypes['Project'][]; // [Project!]!
+  }
   Query: {};
   User: { // root type
     email: string; // String!
@@ -77,7 +88,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
@@ -100,8 +111,13 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     voters: NexusGenRootTypes['User'][]; // [User!]!
   }
+  ProjectList: { // field return type
+    count: number; // Int!
+    id: string | null; // ID
+    projects: NexusGenRootTypes['Project'][]; // [Project!]!
+  }
   Query: { // field return type
-    allProjects: NexusGenRootTypes['Project'][]; // [Project!]!
+    allProjects: NexusGenRootTypes['ProjectList']; // ProjectList!
   }
   User: { // field return type
     email: string; // String!
@@ -137,8 +153,13 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
     voters: 'User'
   }
+  ProjectList: { // field return type name
+    count: 'Int'
+    id: 'ID'
+    projects: 'Project'
+  }
   Query: { // field return type name
-    allProjects: 'Project'
+    allProjects: 'ProjectList'
   }
   User: { // field return type name
     email: 'String'
@@ -175,6 +196,7 @@ export interface NexusGenArgTypes {
   Query: {
     allProjects: { // args
       filter?: string | null; // String
+      orderBy?: NexusGenInputs['ProjectOrderByInput'][] | null; // [ProjectOrderByInput!]
       skip?: number | null; // Int
       take?: number | null; // Int
     }
@@ -189,9 +211,9 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

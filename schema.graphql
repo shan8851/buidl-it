@@ -30,8 +30,25 @@ type Project {
   voters: [User!]!
 }
 
+type ProjectList {
+  count: Int!
+  id: ID
+  projects: [Project!]!
+}
+
+input ProjectOrderByInput {
+  createdAt: Sort
+  description: Sort
+  title: Sort
+}
+
 type Query {
-  allProjects(filter: String, skip: Int, take: Int): [Project!]!
+  allProjects(filter: String, orderBy: [ProjectOrderByInput!], skip: Int, take: Int): ProjectList!
+}
+
+enum Sort {
+  asc
+  desc
 }
 
 type User {

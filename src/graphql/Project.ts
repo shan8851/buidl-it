@@ -1,4 +1,38 @@
-import { extendType, nonNull, objectType, stringArg, intArg, list } from "nexus"
+import {
+  extendType,
+  nonNull,
+  objectType,
+  stringArg,
+  intArg,
+  inputObjectType,
+  enumType,
+  arg,
+  list,
+} from "nexus"
+import { Prisma } from "@prisma/client"
+
+export const ProjectOrderByInput = inputObjectType({
+  name: "ProjectOrderByInput",
+  definition(t) {
+    t.field("title", { type: Sort })
+    t.field("description", { type: Sort })
+    t.field("createdAt", { type: Sort })
+  },
+})
+
+export const Sort = enumType({
+  name: "Sort",
+  members: ["asc", "desc"],
+})
+
+export const ProjectList = objectType({
+  name: "ProjectList",
+  definition(t) {
+    t.nonNull.list.nonNull.field("projects", { type: Project }),
+      t.nonNull.int("count"),
+      t.id("id")
+  },
+})
 
 export const Project = objectType({
   name: "Project",
@@ -35,14 +69,15 @@ export const Project = objectType({
 export const ProjectQuery = extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field("allProjects", {
-      type: "Project",
+    t.nonNull.field("allProjects", {
+      type: "ProjectList",
       args: {
         filter: stringArg(),
         skip: intArg(),
         take: intArg(),
+        orderBy: arg({ type: list(nonNull(ProjectOrderByInput)) }),
       },
-      resolve(parent, args, context) {
+      async resolve(parent, args, context) {
         const where = args.filter
           ? {
               OR: [
@@ -51,11 +86,24 @@ export const ProjectQuery = extendType({
               ],
             }
           : {}
-        return context.prisma.project.findMany({
+
+        const projects = await context.prisma.project.findMany({
           where,
           skip: args?.skip as number | undefined,
           take: args?.take as number | undefined,
+          orderBy: args?.orderBy as
+            | Prisma.Enumerable<Prisma.ProjectOrderByWithRelationInput>
+            | undefined,
         })
+
+        const count = await context.prisma.project.count({ where })
+        const id = `main-feed:${JSON.stringify(args)}`
+
+        return {
+          projects,
+          count,
+          id,
+        }
       },
     })
   },

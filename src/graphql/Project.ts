@@ -16,31 +16,13 @@ export const Project = objectType({
   },
 })
 
-let projects: NexusGenObjects["Project"][] = [
-  // 1
-  {
-    id: 1,
-    title: "Todo List",
-    description: "Fancy todo list",
-    stories: ["1", "2", "3"],
-    examples: ["1", "2", "3"],
-  },
-  {
-    id: 2,
-    title: "Full stack",
-    description: "App",
-    stories: ["1", "2", "3"],
-    examples: ["1", "2", "3"],
-  },
-]
-
 export const ProjectQuery = extendType({
   type: "Query",
   definition(t) {
     t.nonNull.list.nonNull.field("allProjects", {
       type: "Project",
       resolve(parent, args, context, info) {
-        return projects
+        return context.prisma.project.findMany()
       },
     })
   },
@@ -57,16 +39,13 @@ export const ProjectMutation = extendType({
       },
 
       resolve(parent, args, context) {
-        const { title, description } = args
-
-        let idCount = projects.length + 1
-        const project = {
-          id: idCount,
-          title: title,
-          description: description,
-        }
-        projects.push(project)
-        return project
+        const newProject = context.prisma.project.create({
+          data: {
+            title: args.title,
+            description: args.description,
+          },
+        })
+        return newProject
       },
     })
   },

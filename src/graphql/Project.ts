@@ -11,6 +11,7 @@ import {
 } from "nexus"
 import { Prisma } from "@prisma/client"
 
+// Leaving client to handle sort, so allowing all options here
 export const ProjectOrderByInput = inputObjectType({
   name: "ProjectOrderByInput",
   definition(t) {
@@ -86,7 +87,7 @@ export const ProjectQuery = extendType({
         })
 
         const count = await context.prisma.project.count({ where })
-        const id = `main-feed:${JSON.stringify(args)}`
+        const id = `PROJECTS:${JSON.stringify(args)}`
 
         return {
           projects,
@@ -117,6 +118,37 @@ export const ProjectMutation = extendType({
           },
         })
         return newProject
+      },
+    })
+    t.nonNull.field("update", {
+      type: "Project",
+      args: {
+        id: nonNull(intArg()),
+        description: stringArg(),
+        stories: list(nonNull(stringArg())),
+        title: stringArg(),
+      },
+      async resolve(parent, args, context) {
+        return context.prisma.project.update({
+          where: { id: args.id },
+          data: {
+            title: args.title ? args.title : undefined,
+            description: args.description ? args.description : undefined,
+            stories: args.stories ? args.stories : undefined,
+          },
+        })
+      },
+    })
+    t.nonNull.field("delete", {
+      type: "Project",
+      args: {
+        id: nonNull(intArg()),
+      },
+      async resolve(parent, args, context) {
+        const projectToDelete = await context.prisma.project.delete({
+          where: { id: args.id },
+        })
+        return projectToDelete
       },
     })
   },

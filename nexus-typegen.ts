@@ -92,8 +92,10 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     add: NexusGenRootTypes['Project']; // Project!
+    delete: NexusGenRootTypes['Project']; // Project!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    update: NexusGenRootTypes['Project']; // Project!
   }
   Project: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -126,8 +128,10 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     add: 'Project'
+    delete: 'Project'
     login: 'AuthPayload'
     signup: 'AuthPayload'
+    update: 'Project'
   }
   Project: { // field return type name
     createdAt: 'DateTime'
@@ -160,6 +164,9 @@ export interface NexusGenArgTypes {
       stories: string[]; // [String!]!
       title: string; // String!
     }
+    delete: { // args
+      id: number; // Int!
+    }
     login: { // args
       email: string; // String!
       password: string; // String!
@@ -168,6 +175,12 @@ export interface NexusGenArgTypes {
       email: string; // String!
       name: string; // String!
       password: string; // String!
+    }
+    update: { // args
+      description?: string | null; // String
+      id: number; // Int!
+      stories?: string[] | null; // [String!]
+      title?: string | null; // String
     }
   }
   Query: {

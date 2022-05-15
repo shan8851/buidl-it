@@ -14,8 +14,10 @@ scalar DateTime
 
 type Mutation {
   add(description: String!, stories: [String!]!, title: String!): Project!
+  delete(id: Int!): Project!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, name: String!, password: String!): AuthPayload!
+  update(description: String, id: Int!, stories: [String!], title: String): Project!
 }
 
 type Project {

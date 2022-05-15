@@ -110,11 +110,17 @@ export const ProjectMutation = extendType({
         title: nonNull(stringArg()),
       },
       resolve(parent, args, context) {
+        const { userId } = context
+
+        if (!userId) {
+          throw new Error("Cannot add project without logging in.")
+        }
         const newProject = context.prisma.project.create({
           data: {
             title: args.title,
             description: args.description,
             stories: args.stories,
+            postedBy: { connect: { id: userId } },
           },
         })
         return newProject
@@ -129,6 +135,17 @@ export const ProjectMutation = extendType({
         title: stringArg(),
       },
       async resolve(parent, args, context) {
+        const { userId } = context
+        const projectToUpdate = await context.prisma.project.findUnique({
+          where: { id: args.id },
+        })
+        if (!userId) {
+          throw new Error("Cannot update project without logging in.")
+        }
+
+        if (userId !== projectToUpdate?.postedById) {
+          throw new Error("Cannot update project you did not create.")
+        }
         return context.prisma.project.update({
           where: { id: args.id },
           data: {
@@ -145,9 +162,16 @@ export const ProjectMutation = extendType({
         id: nonNull(intArg()),
       },
       async resolve(parent, args, context) {
+        const { userId } = context
         const projectToDelete = await context.prisma.project.delete({
           where: { id: args.id },
         })
+        if (!userId) {
+          throw new Error("Cannot delete a project without logging in")
+        }
+        if (userId !== projectToDelete?.postedById) {
+          throw new Error("Cannot delete project you did not create.")
+        }
         return projectToDelete
       },
     })

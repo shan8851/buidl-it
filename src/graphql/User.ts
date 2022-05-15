@@ -14,13 +14,5 @@ export const User = objectType({
           .projects()
       },
     })
-    t.nonNull.list.nonNull.field("votes", {
-      type: "Project",
-      resolve(parent, args, context) {
-        return context.prisma.user
-          .findUnique({ where: { id: parent.id } })
-          .votes()
-      },
-    })
   },
 })

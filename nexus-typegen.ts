@@ -58,9 +58,8 @@ export interface NexusGenObjects {
   Project: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
-    examples?: Array<string | null> | null; // [String]
     id: number; // Int!
-    stories?: Array<string | null> | null; // [String]
+    stories: string[]; // [String!]!
     title: string; // String!
   }
   ProjectList: { // root type
@@ -73,10 +72,6 @@ export interface NexusGenObjects {
     email: string; // String!
     id: number; // Int!
     name: string; // String!
-  }
-  Vote: { // root type
-    project: NexusGenRootTypes['Project']; // Project!
-    user: NexusGenRootTypes['User']; // User!
   }
 }
 
@@ -99,17 +94,14 @@ export interface NexusGenFieldTypes {
     add: NexusGenRootTypes['Project']; // Project!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
-    vote: NexusGenRootTypes['Vote'] | null; // Vote
   }
   Project: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
-    examples: Array<string | null> | null; // [String]
     id: number; // Int!
     postedBy: NexusGenRootTypes['User'] | null; // User
-    stories: Array<string | null> | null; // [String]
+    stories: string[]; // [String!]!
     title: string; // String!
-    voters: NexusGenRootTypes['User'][]; // [User!]!
   }
   ProjectList: { // field return type
     count: number; // Int!
@@ -124,11 +116,6 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
-    votes: NexusGenRootTypes['Project'][]; // [Project!]!
-  }
-  Vote: { // field return type
-    project: NexusGenRootTypes['Project']; // Project!
-    user: NexusGenRootTypes['User']; // User!
   }
 }
 
@@ -141,17 +128,14 @@ export interface NexusGenFieldTypeNames {
     add: 'Project'
     login: 'AuthPayload'
     signup: 'AuthPayload'
-    vote: 'Vote'
   }
   Project: { // field return type name
     createdAt: 'DateTime'
     description: 'String'
-    examples: 'String'
     id: 'Int'
     postedBy: 'User'
     stories: 'String'
     title: 'String'
-    voters: 'User'
   }
   ProjectList: { // field return type name
     count: 'Int'
@@ -166,11 +150,6 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     projects: 'Project'
-    votes: 'Project'
-  }
-  Vote: { // field return type name
-    project: 'Project'
-    user: 'User'
   }
 }
 
@@ -178,6 +157,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     add: { // args
       description: string; // String!
+      stories: string[]; // [String!]!
       title: string; // String!
     }
     login: { // args
@@ -188,9 +168,6 @@ export interface NexusGenArgTypes {
       email: string; // String!
       name: string; // String!
       password: string; // String!
-    }
-    vote: { // args
-      projectId: number; // Int!
     }
   }
   Query: {

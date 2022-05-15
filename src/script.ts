@@ -5,8 +5,9 @@ const prisma = new PrismaClient()
 async function main() {
   const newProject = await prisma.project.create({
     data: {
-      title: "Todo List",
-      description: "The famous todo list!",
+      title: "SOME PROJECT",
+      description: "Some Description",
+      stories: ["STORY"],
     },
   })
   const allProjects = await prisma.project.findMany()

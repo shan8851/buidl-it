@@ -40,11 +40,8 @@ export const Project = objectType({
     t.nonNull.int("id")
     t.nonNull.string("title")
     t.nonNull.string("description")
-    t.field("stories", {
-      type: list("String"),
-    })
-    t.field("examples", {
-      type: list("String"),
+    t.nonNull.list.nonNull.field("stories", {
+      type: "String",
     })
     t.nonNull.dateTime("createdAt")
     t.field("postedBy", {
@@ -53,14 +50,6 @@ export const Project = objectType({
         return context.prisma.project
           .findUnique({ where: { id: parent.id } })
           .postedBy()
-      },
-    })
-    t.nonNull.list.nonNull.field("voters", {
-      type: "User",
-      resolve(parent, args, context) {
-        return context.prisma.project
-          .findUnique({ where: { id: parent.id } })
-          .voters()
       },
     })
   },
@@ -115,20 +104,16 @@ export const ProjectMutation = extendType({
     t.nonNull.field("add", {
       type: "Project",
       args: {
-        title: nonNull(stringArg()),
         description: nonNull(stringArg()),
+        stories: nonNull(list(nonNull(stringArg()))),
+        title: nonNull(stringArg()),
       },
       resolve(parent, args, context) {
-        const { title, description } = args
-        const { userId } = context
-        if (!userId) {
-          throw new Error("Cannot add project without logging in")
-        }
         const newProject = context.prisma.project.create({
           data: {
             title: args.title,
             description: args.description,
-            postedBy: { connect: { id: userId } },
+            stories: args.stories,
           },
         })
         return newProject

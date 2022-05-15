@@ -1,6 +1,7 @@
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -10,11 +11,11 @@ generator client {
 model Project {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
-  title         String
+  title       String
   description String
+  stories     String[]
   postedBy    User?    @relation(name: "PostedBy", fields: [postedById], references: [id])
   postedById  Int?
-  voters      User[]   @relation(name: "Votes")
 }
 
 
@@ -24,5 +25,4 @@ model User {
   email     String   @unique
   password  String
   projects  Project[] @relation(name: "PostedBy")
-  votes     Project[] @relation(name: "Votes")
 }

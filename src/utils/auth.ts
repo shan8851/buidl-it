@@ -1,5 +1,4 @@
 import * as jwt from "jsonwebtoken"
-import { APP_SECRET } from "../secret"
 
 export interface AuthTokenPayload {
   userId: number
@@ -11,5 +10,5 @@ export function decodeAuthHeader(authHeader: String): AuthTokenPayload {
   if (!token) {
     throw new Error("No token found")
   }
-  return jwt.verify(token, APP_SECRET) as AuthTokenPayload
+  return jwt.verify(token, process.env.APP_SECRET!) as AuthTokenPayload
 }

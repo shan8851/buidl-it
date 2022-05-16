@@ -15,11 +15,14 @@ import { AUTH_TOKEN } from "./constants"
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN)
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : null,
-    },
+  if (!token) return { headers: { ...headers } }
+  else {
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : null,
+      },
+    }
   }
 })
 
@@ -28,7 +31,7 @@ const httpLink = createHttpLink({
 })
 
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
 

@@ -19,6 +19,9 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { FaPlus } from "react-icons/fa"
+import { useMutation } from "@apollo/client"
+import { ADD_PROJECT_MUTATION } from "../gql/mutations"
+import { GET_ALL_PROJECTS_QUERY, GET_USER_PROJECTS } from "../gql/queries"
 
 export const ProjectForm = ({ isOpen, onClose }) => {
   const [storyValue, setStoryValue] = useState("")
@@ -34,8 +37,22 @@ export const ProjectForm = ({ isOpen, onClose }) => {
 
   const toast = useToast()
 
+  const [add, { loading, error }] = useMutation(ADD_PROJECT_MUTATION, {
+    variables: {
+      title,
+      description,
+      difficulty,
+      stories,
+    },
+    refetchQueries: [
+      { query: GET_USER_PROJECTS },
+      { query: GET_ALL_PROJECTS_QUERY },
+    ],
+  })
+
   const onSubmit = (e) => {
     e.preventDefault()
+    add()
     console.log(formData)
     onClose()
   }

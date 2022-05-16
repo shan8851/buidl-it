@@ -12,10 +12,13 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { FiPlusCircle } from "react-icons/fi"
-import { useQuery } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { GET_USER_PROJECTS } from "../gql/queries"
+import { DELETE_MUTATION } from "../gql/mutations"
+import { useState } from "react"
 
 export const MyProjects = () => {
+  const [deleteId, setDeleteId] = useState(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const toast = useToast()
@@ -23,20 +26,30 @@ export const MyProjects = () => {
   const user = { name: "shan" }
 
   const { data, loading, error } = useQuery(GET_USER_PROJECTS, {
-    variables: { id: 1 },
+    variables: { id: 6 },
+  })
+
+  const [deleteProject] = useMutation(DELETE_MUTATION, {
+    variables: {
+      id: deleteId,
+    },
   })
 
   const onDelete = (id) => {
-    console.log(id)
-    toast({
-      title: "Project deleted",
-      description: "We're sorry to see it go 😞",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-      variant: "left-accent",
-      position: "top",
-    })
+    console.log("hello", id)
+    setDeleteId(id)
+    setTimeout(() => {
+      deleteProject()
+      toast({
+        title: "Project deleted",
+        description: "We're sorry to see it go 😞",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        variant: "left-accent",
+        position: "top",
+      })
+    }, 1000)
   }
 
   if (loading) return <Spinner />
@@ -60,48 +73,40 @@ export const MyProjects = () => {
         </Flex>
       </Center>
 
-      {/* {projData.length > 0 &&
-        projData.map((project) => (
-          <Flex justifyContent="center">
-            <Container
-              key={project._id}
-              p={4}
-              my={4}
-              border="1px"
-              rounded="lg"
-              w="full"
-            >
-              <Badge colorScheme="green">Title:</Badge>
-              <Text fontSize="2xl" fontWeight="extrabold" my={2}>
-                {" "}
-                {project.title}
-              </Text>
-              <Badge colorScheme="green">Description:</Badge>
-              <Text my={2}> {project.description}</Text>
-              <Flex justifyContent="space-between">
-                <Button
-                  isDisabled={true}
-                  px={2}
-                  size="sm"
-                  colorScheme="green"
-                  w="48%"
-                  onClick={() => console.log("edit")}
-                >
-                  Edit
-                </Button>
-                <Button
-                  px={2}
-                  size="sm"
-                  colorScheme="green"
-                  w="48%"
-                  onClick={() => onDelete(project._id)}
-                >
-                  Delete
-                </Button>
-              </Flex>
-            </Container>
-          </Flex>
-        ))} */}
+      {data.userProjects.map((project) => (
+        <Flex key={project.id} justifyContent="center">
+          <Container p={4} my={4} border="1px" rounded="lg" w="full">
+            <Badge colorScheme="green">Title:</Badge>
+            <Text fontSize="2xl" fontWeight="extrabold" my={2}>
+              {" "}
+              {project.title}
+            </Text>
+            <Badge colorScheme="green">Description:</Badge>
+            <Text my={2}> {project.description}</Text>
+            <Flex justifyContent="space-between">
+              <Button
+                isDisabled={true}
+                px={2}
+                size="sm"
+                colorScheme="green"
+                w="48%"
+                onClick={() => console.log("edit")}
+              >
+                Edit
+              </Button>
+              <Button
+                px={2}
+                size="sm"
+                colorScheme="green"
+                w="48%"
+                onClick={() => onDelete(project.id)}
+              >
+                Delete
+              </Button>
+            </Flex>
+          </Container>
+        </Flex>
+      ))}
 
       <Flex justifyContent="center" direction="column" alignItems="center">
         {" "}

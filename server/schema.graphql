@@ -13,7 +13,7 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Mutation {
-  add(description: String!, stories: [String!]!, title: String!): Project!
+  add(description: String!, difficulty: String!, stories: [String!]!, title: String!): Project!
   delete(id: Int!): Project!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, name: String!, password: String!): AuthPayload!
@@ -23,6 +23,7 @@ type Mutation {
 type Project {
   createdAt: DateTime!
   description: String!
+  difficulty: String!
   id: Int!
   postedBy: User
   stories: [String!]!
@@ -43,6 +44,8 @@ input ProjectOrderByInput {
 
 type Query {
   allProjects(filter: String, orderBy: [ProjectOrderByInput!], skip: Int, take: Int): ProjectList!
+  allUsers: [User!]!
+  getUser(id: Int!): [User!]!
   userProjects(id: Int!): [Project!]!
 }
 

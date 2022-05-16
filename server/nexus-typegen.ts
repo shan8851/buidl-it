@@ -58,6 +58,7 @@ export interface NexusGenObjects {
   Project: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
+    difficulty: string; // String!
     id: number; // Int!
     stories: string[]; // [String!]!
     title: string; // String!
@@ -100,6 +101,7 @@ export interface NexusGenFieldTypes {
   Project: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
+    difficulty: string; // String!
     id: number; // Int!
     postedBy: NexusGenRootTypes['User'] | null; // User
     stories: string[]; // [String!]!
@@ -112,6 +114,8 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     allProjects: NexusGenRootTypes['ProjectList']; // ProjectList!
+    allUsers: NexusGenRootTypes['User'][]; // [User!]!
+    getUser: NexusGenRootTypes['User'][]; // [User!]!
     userProjects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   User: { // field return type
@@ -137,6 +141,7 @@ export interface NexusGenFieldTypeNames {
   Project: { // field return type name
     createdAt: 'DateTime'
     description: 'String'
+    difficulty: 'String'
     id: 'Int'
     postedBy: 'User'
     stories: 'String'
@@ -149,6 +154,8 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     allProjects: 'ProjectList'
+    allUsers: 'User'
+    getUser: 'User'
     userProjects: 'Project'
   }
   User: { // field return type name
@@ -163,6 +170,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     add: { // args
       description: string; // String!
+      difficulty: string; // String!
       stories: string[]; // [String!]!
       title: string; // String!
     }
@@ -191,6 +199,9 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['ProjectOrderByInput'][] | null; // [ProjectOrderByInput!]
       skip?: number | null; // Int
       take?: number | null; // Int
+    }
+    getUser: { // args
+      id: number; // Int!
     }
     userProjects: { // args
       id: number; // Int!

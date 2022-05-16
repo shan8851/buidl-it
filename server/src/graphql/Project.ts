@@ -41,6 +41,7 @@ export const Project = objectType({
     t.nonNull.int("id")
     t.nonNull.string("title")
     t.nonNull.string("description")
+    t.nonNull.string("difficulty")
     t.nonNull.list.nonNull.field("stories", {
       type: "String",
     })
@@ -125,6 +126,7 @@ export const ProjectMutation = extendType({
         description: nonNull(stringArg()),
         stories: nonNull(list(nonNull(stringArg()))),
         title: nonNull(stringArg()),
+        difficulty: nonNull(stringArg()),
       },
       resolve(parent, args, context) {
         const { userId } = context
@@ -136,6 +138,7 @@ export const ProjectMutation = extendType({
           data: {
             title: args.title,
             description: args.description,
+            difficulty: args.difficulty,
             stories: args.stories,
             postedBy: { connect: { id: userId } },
           },

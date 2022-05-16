@@ -15,3 +15,31 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_MUTATION = gql`
+  mutation deleteProject($id: Int!) {
+    deleteProject(id: $id) {
+      id
+      title
+    }
+  }
+`
+
+export const ADD_PROJECT_MUTATION = gql`
+  mutation add(
+    $title: String!
+    $difficulty: String!
+    $description: String!
+    $stories: [String!]!
+  ) {
+    add(
+      title: $title
+      difficulty: $difficulty
+      description: $description
+      stories: $stories
+    ) {
+      id
+      title
+    }
+  }
+`

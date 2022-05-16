@@ -9,11 +9,13 @@ export const GET_ALL_PROJECTS_QUERY = gql`
         id
         title
         description
+        difficulty
         stories
         createdAt
         postedBy {
           name
           email
+          id
         }
       }
     }
@@ -25,6 +27,7 @@ export const GET_USER_PROJECTS = gql`
     userProjects(id: $id) {
       id
       title
+      description
     }
   }
 `

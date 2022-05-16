@@ -12,6 +12,7 @@ import {
 } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { AUTH_TOKEN } from "./constants"
+import { cache } from "./cache"
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN)
@@ -32,7 +33,7 @@ const httpLink = createHttpLink({
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: cache,
 })
 
 const container = document.getElementById("root")

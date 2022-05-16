@@ -112,6 +112,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     allProjects: NexusGenRootTypes['ProjectList']; // ProjectList!
+    userProjects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   User: { // field return type
     email: string; // String!
@@ -148,6 +149,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     allProjects: 'ProjectList'
+    userProjects: 'Project'
   }
   User: { // field return type name
     email: 'String'
@@ -189,6 +191,9 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['ProjectOrderByInput'][] | null; // [ProjectOrderByInput!]
       skip?: number | null; // Int
       take?: number | null; // Int
+    }
+    userProjects: { // args
+      id: number; // Int!
     }
   }
 }

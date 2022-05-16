@@ -99,6 +99,23 @@ export const ProjectQuery = extendType({
   },
 })
 
+export const UserProjectQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.list.nonNull.field("userProjects", {
+      type: "Project",
+      args: {
+        id: nonNull(intArg()),
+      },
+      async resolve(parent, args, context) {
+        return await context.prisma.project.findMany({
+          where: { postedById: args.id },
+        })
+      },
+    })
+  },
+})
+
 export const ProjectMutation = extendType({
   type: "Mutation",
   definition(t) {

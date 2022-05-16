@@ -43,6 +43,7 @@ input ProjectOrderByInput {
 
 type Query {
   allProjects(filter: String, orderBy: [ProjectOrderByInput!], skip: Int, take: Int): ProjectList!
+  userProjects(id: Int!): [Project!]!
 }
 
 enum Sort {

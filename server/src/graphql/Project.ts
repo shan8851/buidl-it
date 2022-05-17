@@ -74,6 +74,7 @@ export const ProjectQuery = extendType({
               OR: [
                 { description: { contains: args.filter } },
                 { title: { contains: args.filter } },
+                { difficulty: { contains: args.filter } },
               ],
             }
           : {}

@@ -34,8 +34,8 @@ export const LOGIN_MUTATION = gql`
 `
 
 export const DELETE_MUTATION = gql`
-  mutation deleteProject($id: Int!) {
-    deleteProject(id: $id) {
+  mutation delete($id: Int!) {
+    delete(id: $id) {
       id
       title
     }

@@ -32,7 +32,7 @@ export const MyProjects = () => {
   })
 
   const onDelete = (id) => {
-    console.log("hello", id)
+    console.log("hello", data)
     setDeleteId(id)
     setTimeout(() => {
       deleteProject()
@@ -119,15 +119,18 @@ export const MyProjects = () => {
         </Flex>
       )}
 
-      {data && data.getUser.projects.length < 1 && (
-        <Flex alignItems="center" direction="column">
-          <Text
-            fontSize={["sm", "md", "xl"]}
-            textAlign="center"
-            fontWeight="bold"
-          >
-            You have not created any projects yet
-          </Text>
+      {data && (
+        <Flex alignItems="center" direction="column" justifyContent="center">
+          {data.getUser.projects.length < 1 && (
+            <Text
+              fontSize={["sm", "md", "xl"]}
+              textAlign="center"
+              fontWeight="bold"
+            >
+              You have not created any projects yet
+            </Text>
+          )}
+
           <Button
             leftIcon={<FiPlusCircle />}
             colorScheme="green"

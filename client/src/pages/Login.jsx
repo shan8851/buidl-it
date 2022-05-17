@@ -77,7 +77,7 @@ export const Login = () => {
             onChange={onChange}
             my={2}
           />
-          <Button isFullWidth colorScheme="green" onClick={login}>
+          <Button width={"full"} colorScheme="green" onClick={login}>
             login
           </Button>
         </form>

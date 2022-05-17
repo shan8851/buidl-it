@@ -15,8 +15,11 @@ import {
   Select,
   Textarea,
   Flex,
+  Text,
   IconButton,
   useToast,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react"
 import { FaPlus } from "react-icons/fa"
 import { useMutation } from "@apollo/client"
@@ -45,6 +48,14 @@ export const ProjectForm = ({ isOpen, onClose }) => {
       stories,
     },
     refetchQueries: [GET_USER_QUERY, GET_ALL_PROJECTS_QUERY],
+    onCompleted: () =>
+      setFormData({
+        title: "",
+        description: "",
+        difficulty: "",
+        stories: [],
+        examples: [],
+      }),
   })
 
   const onSubmit = (e) => {
@@ -59,6 +70,17 @@ export const ProjectForm = ({ isOpen, onClose }) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
+  }
+
+  const handleClose = () => {
+    setFormData({
+      title: "",
+      description: "",
+      difficulty: "",
+      stories: [],
+      examples: [],
+    })
+    onClose()
   }
 
   const handleAddStory = () => {
@@ -128,7 +150,7 @@ export const ProjectForm = ({ isOpen, onClose }) => {
               </FormHelperText>
             </FormControl>
             <Flex alignItems="center">
-              <FormControl w="80%" flex={1} my={4}>
+              <FormControl isRequired w="80%" flex={1} my={4}>
                 <FormLabel htmlFor="story">Add a user story</FormLabel>
                 <Input
                   id="story"
@@ -150,11 +172,16 @@ export const ProjectForm = ({ isOpen, onClose }) => {
                 ml={4}
               />
             </Flex>
+            <UnorderedList>
+              {formData.stories.map((story) => (
+                <ListItem>{story}</ListItem>
+              ))}
+            </UnorderedList>
           </form>
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={onClose} variant="outline" colorScheme="green">
+          <Button onClick={handleClose} variant="outline" colorScheme="green">
             Cancel
           </Button>
           <Button colorScheme="green" ml={3} onClick={onSubmit}>

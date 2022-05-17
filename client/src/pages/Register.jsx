@@ -101,7 +101,7 @@ export const Register = () => {
             onChange={onChange}
             my={2}
           />
-          <Button isFullWidth colorScheme="green" type="submit">
+          <Button width={"full"} colorScheme="green" type="submit">
             Register
           </Button>
         </form>

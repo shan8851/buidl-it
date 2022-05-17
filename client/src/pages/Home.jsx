@@ -8,18 +8,21 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { Layout } from "../components/Layout"
-import { FaUserAlt } from "react-icons/fa"
+import { FaUserAlt, FaSignInAlt } from "react-icons/fa"
 import { useQuery } from "@apollo/client"
 import { GET_ALL_PROJECTS_QUERY } from "../gql/project"
+import { useNavigate } from "react-router-dom"
+import { AUTH_TOKEN } from "../constants"
 
 export const Home = () => {
+  const navigate = useNavigate()
   const { data, loading, error } = useQuery(GET_ALL_PROJECTS_QUERY)
+  const authToken = localStorage.getItem(AUTH_TOKEN)
 
   if (loading) return <Spinner />
   if (error) return `Something went wrong! ${error.message}`
   return (
     <Layout>
-      {console.log(data)}
       <Center mb="20px">
         <Text fontWeight="black" fontSize={["2xl", "6xl"]}>
           Welcome to
@@ -43,19 +46,36 @@ export const Home = () => {
           </Text>
         </Container>
       </Flex>
-      <Flex justifyContent="center">
-        <Container mb="20px">
-          <Text fontSize={["sm", "md", "xl"]} textAlign="center">
-            Got a cool project idea you would like to share? Sign up and submit
-            your own.
-          </Text>
-        </Container>
-      </Flex>
-      <Flex justifyContent="center" mb="20px">
-        <Button rightIcon={<FaUserAlt />} colorScheme="green">
-          Register
-        </Button>
-      </Flex>
+      {!authToken && (
+        <>
+          <Flex justifyContent="center">
+            <Container mb="20px">
+              <Text fontSize={["sm", "md", "xl"]} textAlign="center">
+                Got a cool project idea you would like to share? Sign up/login
+                and submit your own.
+              </Text>
+            </Container>
+          </Flex>
+          <Flex justifyContent="center" mb="20px">
+            <Button
+              onClick={() => navigate("/login")}
+              mr={2}
+              rightIcon={<FaUserAlt />}
+              colorScheme="green"
+            >
+              Sign Up
+            </Button>
+            <Button
+              onClick={() => navigate("/login")}
+              ml={2}
+              rightIcon={<FaSignInAlt />}
+              colorScheme="green"
+            >
+              Login
+            </Button>
+          </Flex>
+        </>
+      )}
       <Text fontWeight="black" fontSize={["2xl", "6xl"]} textAlign="center">
         👷 Projects
       </Text>

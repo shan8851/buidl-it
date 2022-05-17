@@ -14,22 +14,26 @@ import {
 import { FiPlusCircle } from "react-icons/fi"
 import { useMutation, useQuery } from "@apollo/client"
 import { useState } from "react"
-import { GET_USER_OBJECT } from "../gql/user"
+import { GET_USER_QUERY } from "../gql/user"
 import { DELETE_MUTATION } from "../gql/project"
+import { USER_ID } from "../constants"
 
 export const MyProjects = () => {
   const [deleteId, setDeleteId] = useState(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const userId = parseInt(localStorage.getItem(USER_ID))
 
   const toast = useToast()
 
-  const { data, loading, error } = useQuery(GET_USER_OBJECT)
+  const { data, loading, error } = useQuery(GET_USER_QUERY, {
+    variables: { id: userId },
+  })
 
   const [deleteProject] = useMutation(DELETE_MUTATION, {
     variables: {
       id: deleteId,
     },
-    refetchQueries: [GET_USER_OBJECT],
+    refetchQueries: [GET_USER_QUERY],
   })
 
   const onDelete = (id) => {
@@ -51,19 +55,20 @@ export const MyProjects = () => {
 
   if (loading) return <Spinner />
   if (error) return `Something went wrong! ${error.message}`
+  if (data.getUserById === null) return <div>User not found</div>
   return (
     <Layout>
       <Center my={"40px"}>
         <Flex direction="column" alignItems="center">
           <Text fontWeight="black" fontSize={["2xl", "6xl"]} textAlign="center">
-            👋 {data.getUser.name && data.getUser.name}
+            👋 {data.getUserById.name && data.getUserById.name}
           </Text>
           <Container centerContent>
             {" "}
             <Text fontSize={["sm", "md", "xl"]} textAlign="center">
               Thanks for sharing your project ideas with BuildIt{" "}
-              {data.getUser.name && data.getUser.name.split(" ")[0]}. At the
-              moment you can add or delete more here. Edit functionality is
+              {data.getUserById.name && data.getUserById.name.split(" ")[0]}. At
+              the moment you can add or delete more here. Edit functionality is
               coming soon.
             </Text>
           </Container>
@@ -71,7 +76,7 @@ export const MyProjects = () => {
       </Center>
 
       {data &&
-        data.getUser.projects.map((project) => (
+        data.getUserById.projects.map((project) => (
           <Flex key={project.id} justifyContent="center">
             <Container p={4} my={4} border="1px" rounded="lg" w="full">
               <Badge colorScheme="green">Title:</Badge>
@@ -106,7 +111,7 @@ export const MyProjects = () => {
           </Flex>
         ))}
 
-      {data && !data.getUser.projects && (
+      {data && !data.getUserById.projects && (
         <Flex justifyContent="center" direction="column" alignItems="center">
           {" "}
           <Button
@@ -122,7 +127,7 @@ export const MyProjects = () => {
 
       {data && (
         <Flex alignItems="center" direction="column" justifyContent="center">
-          {data.getUser.projects.length < 1 && (
+          {data.getUserById.projects.length < 1 && (
             <Text
               fontSize={["sm", "md", "xl"]}
               textAlign="center"

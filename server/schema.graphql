@@ -45,7 +45,7 @@ input ProjectOrderByInput {
 type Query {
   allProjects(filter: String, orderBy: [ProjectOrderByInput!], skip: Int, take: Int): ProjectList!
   allUsers: [User!]!
-  getUser(id: Int!): [User!]!
+  getUserById(id: Int!): User
   userProjects(id: Int!): [Project!]!
 }
 

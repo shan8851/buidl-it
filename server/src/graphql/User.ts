@@ -29,10 +29,10 @@ export const UserQuery = extendType({
   },
 })
 
-export const GetUserByID = extendType({
+export const GetUserById = extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.list.nonNull.field("getUser", {
+    t.field("getUserById", {
       type: "User",
       args: {
         id: nonNull(intArg()),

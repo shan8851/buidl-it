@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { FaSignOutAlt } from "react-icons/fa"
 import { Button, Flex, Heading, Link } from "@chakra-ui/react"
-import { AUTH_TOKEN, USER_OBJECT } from "../constants"
+import { AUTH_TOKEN, USER_ID } from "../constants"
 
 export const Header = () => {
   const navigate = useNavigate()
@@ -32,7 +32,7 @@ export const Header = () => {
                 variant="solid"
                 onClick={() => {
                   localStorage.removeItem(AUTH_TOKEN)
-                  localStorage.removeItem(USER_OBJECT)
+                  localStorage.removeItem(USER_ID)
                   navigate(`/`)
                 }}
                 ml={4}

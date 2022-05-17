@@ -11,3 +11,26 @@ export const GET_USER_OBJECT = gql`
     getUser @client
   }
 `
+
+export const GET_USER_QUERY = gql`
+  query getUserById($id: Int!) {
+    getUserById(id: $id) {
+      id
+      name
+      email
+      projects {
+        id
+        title
+        description
+        difficulty
+        stories
+        createdAt
+        postedBy {
+          name
+          email
+          id
+        }
+      }
+    }
+  }
+`

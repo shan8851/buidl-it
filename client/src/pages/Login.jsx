@@ -2,9 +2,9 @@ import { useMutation } from "@apollo/client"
 import { Button, Flex, Heading, Input, Text, Spinner } from "@chakra-ui/react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUserVar, isLoggedInVar } from "../cache"
+import { getUserIdVar, isLoggedInVar } from "../cache"
 import { Layout } from "../components/Layout"
-import { AUTH_TOKEN, USER_OBJECT } from "../constants"
+import { AUTH_TOKEN, USER_ID } from "../constants"
 import { LOGIN_MUTATION } from "../gql/auth"
 
 export const Login = () => {
@@ -35,9 +35,9 @@ export const Login = () => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token)
-      localStorage.setItem(USER_OBJECT, login.user)
+      localStorage.setItem(USER_ID, login.user.id)
       isLoggedInVar(true)
-      getUserVar(login.user)
+      getUserIdVar(login.user.id)
       navigate("/my-projects")
     },
   })

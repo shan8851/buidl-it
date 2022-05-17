@@ -115,7 +115,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     allProjects: NexusGenRootTypes['ProjectList']; // ProjectList!
     allUsers: NexusGenRootTypes['User'][]; // [User!]!
-    getUser: NexusGenRootTypes['User'][]; // [User!]!
+    getUserById: NexusGenRootTypes['User'] | null; // User
     userProjects: NexusGenRootTypes['Project'][]; // [Project!]!
   }
   User: { // field return type
@@ -155,7 +155,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     allProjects: 'ProjectList'
     allUsers: 'User'
-    getUser: 'User'
+    getUserById: 'User'
     userProjects: 'Project'
   }
   User: { // field return type name
@@ -200,7 +200,7 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       take?: number | null; // Int
     }
-    getUser: { // args
+    getUserById: { // args
       id: number; // Int!
     }
     userProjects: { // args

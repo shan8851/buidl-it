@@ -21,7 +21,7 @@ import {
 import { FaPlus } from "react-icons/fa"
 import { useMutation } from "@apollo/client"
 import { ADD_PROJECT_MUTATION, GET_ALL_PROJECTS_QUERY } from "../gql/project"
-import { GET_USER_OBJECT } from "../gql/user"
+import { GET_USER_OBJECT, GET_USER_QUERY } from "../gql/user"
 
 export const ProjectForm = ({ isOpen, onClose }) => {
   const [storyValue, setStoryValue] = useState("")
@@ -44,10 +44,7 @@ export const ProjectForm = ({ isOpen, onClose }) => {
       difficulty,
       stories,
     },
-    refetchQueries: [
-      { query: GET_USER_OBJECT },
-      { query: GET_ALL_PROJECTS_QUERY },
-    ],
+    refetchQueries: [GET_USER_QUERY, GET_ALL_PROJECTS_QUERY],
   })
 
   const onSubmit = (e) => {

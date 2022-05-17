@@ -1,26 +1,14 @@
-import {
-  Badge,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Spinner,
-  Text,
-} from "@chakra-ui/react"
+import { Button, Center, Container, Flex, Text } from "@chakra-ui/react"
 import { Layout } from "../components/Layout"
 import { FaUserAlt, FaSignInAlt } from "react-icons/fa"
-import { useQuery } from "@apollo/client"
-import { GET_ALL_PROJECTS_QUERY } from "../gql/project"
 import { useNavigate } from "react-router-dom"
 import { AUTH_TOKEN } from "../constants"
+import { ProjectList } from "../components/ProjectList"
 
 export const Home = () => {
   const navigate = useNavigate()
-  const { data, loading, error } = useQuery(GET_ALL_PROJECTS_QUERY)
   const authToken = localStorage.getItem(AUTH_TOKEN)
 
-  if (loading) return <Spinner />
-  if (error) return `Something went wrong! ${error.message}`
   return (
     <Layout>
       <Center mb="20px">
@@ -80,31 +68,7 @@ export const Home = () => {
         👷 Projects
       </Text>
 
-      {data.allProjects.projects.map((project) => (
-        <Flex justifyContent="center" key={project.id}>
-          <Container p={4} my={4} border="1px" rounded="lg">
-            <Badge colorScheme="green">Difficulty:</Badge>
-            <Text my={2}> {project.difficulty}</Text>
-            <Badge colorScheme="green">Title:</Badge>
-            <Text fontSize="2xl" fontWeight="extrabold" my={2}>
-              {" "}
-              {project.title}
-            </Text>
-            <Badge colorScheme="green">Description:</Badge>
-            <Text my={2}> {project.description}</Text>
-            {project.stories.length > 0 && (
-              <>
-                <Badge colorScheme="green">User Stories:</Badge>
-                {project.stories.map((story) => (
-                  <Text my={2} key={story}>
-                    🔨 {story}
-                  </Text>
-                ))}
-              </>
-            )}
-          </Container>
-        </Flex>
-      ))}
+      <ProjectList />
     </Layout>
   )
 }

@@ -16,7 +16,7 @@ import { useMutation, useQuery } from "@apollo/client"
 import { useState } from "react"
 import { GET_USER_QUERY } from "../gql/user"
 import { DELETE_MUTATION } from "../gql/project"
-import { USER_ID } from "../constants"
+import { USER_ID } from "../utils/constants"
 
 export const MyProjects = () => {
   const [deleteId, setDeleteId] = useState(null)

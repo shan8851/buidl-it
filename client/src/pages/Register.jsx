@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Layout } from "../components/Layout"
 import { Button, Flex, Heading, Input, Text, Spinner } from "@chakra-ui/react"
 import { useMutation } from "@apollo/client"
-import { AUTH_TOKEN } from "../constants"
+import { AUTH_TOKEN } from "../utils/constants"
 import { SIGNUP_MUTATION } from "../gql/auth"
 
 export const Register = () => {

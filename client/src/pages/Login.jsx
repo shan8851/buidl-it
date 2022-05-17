@@ -2,9 +2,9 @@ import { useMutation } from "@apollo/client"
 import { Button, Flex, Heading, Input, Text, Spinner } from "@chakra-ui/react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUserIdVar, isLoggedInVar } from "../cache"
+import { getUserIdVar, isLoggedInVar } from "../utils/cache"
 import { Layout } from "../components/Layout"
-import { AUTH_TOKEN, USER_ID } from "../constants"
+import { AUTH_TOKEN, USER_ID } from "../utils/constants"
 import { LOGIN_MUTATION } from "../gql/auth"
 
 export const Login = () => {

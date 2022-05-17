@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { FaSignOutAlt } from "react-icons/fa"
 import { Button, Flex, Heading, Link } from "@chakra-ui/react"
-import { AUTH_TOKEN, USER_ID } from "../constants"
+import { AUTH_TOKEN, USER_ID } from "../utils/constants"
 
 export const Header = () => {
   const navigate = useNavigate()

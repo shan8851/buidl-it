@@ -3,16 +3,10 @@ import { createRoot } from "react-dom/client"
 import { App } from "./App"
 import { ChakraProvider } from "@chakra-ui/react"
 import reportWebVitals from "./reportWebVitals"
-import "./index.css"
-import {
-  ApolloProvider,
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-} from "@apollo/client"
+import { ApolloProvider, ApolloClient, createHttpLink } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
-import { AUTH_TOKEN } from "./constants"
-import { cache } from "./cache"
+import { AUTH_TOKEN } from "./utils/constants"
+import { cache } from "./utils/cache"
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN)

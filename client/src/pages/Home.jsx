@@ -2,7 +2,7 @@ import { Button, Center, Container, Flex, Text } from "@chakra-ui/react"
 import { Layout } from "../components/Layout"
 import { FaUserAlt, FaSignInAlt } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-import { AUTH_TOKEN } from "../constants"
+import { AUTH_TOKEN } from "../utils/constants"
 import { ProjectList } from "../components/ProjectList"
 
 export const Home = () => {

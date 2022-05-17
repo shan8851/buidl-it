@@ -1,4 +1,4 @@
-function timeDifference(current, previous) {
+const timeDifference = (current, previous) => {
   const milliSecondsPerMinute = 60 * 1000
   const milliSecondsPerHour = milliSecondsPerMinute * 60
   const milliSecondsPerDay = milliSecondsPerHour * 24
@@ -26,7 +26,7 @@ function timeDifference(current, previous) {
   }
 }
 
-export function timeDifferenceForDate(date) {
+export const timeDifferenceForDate = (date) => {
   const now = new Date().getTime()
   const updated = new Date(date).getTime()
   return timeDifference(now, updated)

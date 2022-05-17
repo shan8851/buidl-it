@@ -13,9 +13,9 @@ import {
 } from "@chakra-ui/react"
 import { FiPlusCircle } from "react-icons/fi"
 import { useMutation, useQuery } from "@apollo/client"
-import { GET_USER_OBJECT } from "../gql/queries"
-import { DELETE_MUTATION } from "../gql/mutations"
 import { useState } from "react"
+import { GET_USER_OBJECT } from "../gql/user"
+import { DELETE_MUTATION } from "../gql/project"
 
 export const MyProjects = () => {
   const [deleteId, setDeleteId] = useState(null)
@@ -29,6 +29,7 @@ export const MyProjects = () => {
     variables: {
       id: deleteId,
     },
+    refetchQueries: [GET_USER_OBJECT],
   })
 
   const onDelete = (id) => {

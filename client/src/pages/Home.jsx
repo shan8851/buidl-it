@@ -10,7 +10,7 @@ import {
 import { Layout } from "../components/Layout"
 import { FaUserAlt } from "react-icons/fa"
 import { useQuery } from "@apollo/client"
-import { GET_ALL_PROJECTS_QUERY } from "../gql/queries"
+import { GET_ALL_PROJECTS_QUERY } from "../gql/project"
 
 export const Home = () => {
   const { data, loading, error } = useQuery(GET_ALL_PROJECTS_QUERY)
@@ -38,8 +38,8 @@ export const Home = () => {
         <Container mb="20px">
           <Text fontSize={["sm", "md", "xl"]} textAlign="center">
             We're all about making it easier for developers to level up their
-            skills and build out a portfolio. That's why we created Build it - a
-            website full of project ideas for developers to get started on.
+            skills and build out a portfolio. That's why we created Buidl\ it -
+            a website full of project ideas for developers to get started on.
           </Text>
         </Container>
       </Flex>

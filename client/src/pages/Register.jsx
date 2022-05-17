@@ -2,9 +2,9 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Layout } from "../components/Layout"
 import { Button, Flex, Heading, Input, Text, Spinner } from "@chakra-ui/react"
-import { SIGNUP_MUTATION } from "../gql/mutations"
 import { useMutation } from "@apollo/client"
 import { AUTH_TOKEN } from "../constants"
+import { SIGNUP_MUTATION } from "../gql/auth"
 
 export const Register = () => {
   const [formData, setFormData] = useState({

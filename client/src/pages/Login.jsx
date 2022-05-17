@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { getUserVar, isLoggedInVar } from "../cache"
 import { Layout } from "../components/Layout"
 import { AUTH_TOKEN, USER_OBJECT } from "../constants"
-import { LOGIN_MUTATION } from "../gql/mutations"
+import { LOGIN_MUTATION } from "../gql/auth"
 
 export const Login = () => {
   const navigate = useNavigate()

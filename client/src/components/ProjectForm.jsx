@@ -15,16 +15,16 @@ import {
   Select,
   Textarea,
   Flex,
-  Text,
   IconButton,
   useToast,
   UnorderedList,
   ListItem,
+  Spinner,
 } from "@chakra-ui/react"
 import { FaPlus } from "react-icons/fa"
 import { useMutation } from "@apollo/client"
 import { ADD_PROJECT_MUTATION, GET_ALL_PROJECTS_QUERY } from "../gql/project"
-import { GET_USER_OBJECT, GET_USER_QUERY } from "../gql/user"
+import { GET_USER_QUERY } from "../gql/user"
 
 export const ProjectForm = ({ isOpen, onClose }) => {
   const [storyValue, setStoryValue] = useState("")
@@ -95,6 +95,9 @@ export const ProjectForm = ({ isOpen, onClose }) => {
     })
     setStoryValue("")
   }
+
+  if (loading) return <Spinner />
+  if (error) return `Something went wrong! ${error.message}`
 
   return (
     <Modal size="full" isCentered isOpen={isOpen} onClose={onClose}>

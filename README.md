@@ -1,8 +1,8 @@
-# 👷 BuildIt 🛠️
+# 👷 BuidlIt 🛠️
 
 ## Motivation
 
-Ever googled `Side project ideas`, `beginner app ideas` or some other version of those? Yeah, me to...
+Ever googled `Side project ideas`, `beginner app ideas` or some other version of those? Yeah, me too...
 
 In fact this project come about because yet again I could not think of a project idea to build.
 
@@ -14,7 +14,7 @@ Buidl is pretty common in the web3 space, which is where I spend a lot of my tim
 
 ## Built With
 
-**BuildIt** has a React frontend, styled with [Chakra UI](https://chakra-ui.com/) and uses [Apollo Client v3](https://www.apollographql.com/docs/react/) for managing all state and bits and pieces on the client.
+**BuidlIt** has a React frontend, styled with [Chakra UI](https://chakra-ui.com/) and uses [Apollo Client v3](https://www.apollographql.com/docs/react/) for managing all state and bits and pieces on the client.
 
 I decided to use a graphql api, again leveraging apollo and nexus and it is in full typescript, which just makes developing a breeze. I should have definitely stuck with TS for the frontend too.
 
